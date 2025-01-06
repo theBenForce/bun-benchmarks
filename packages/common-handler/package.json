@@ -1,0 +1,13 @@
+{
+  "name": "@repo/common-handler",
+  "version": "0.0.0",
+  "description": "Common handler for repo packages",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "repo",
+    "handler"
+  ]
+}

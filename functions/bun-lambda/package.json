@@ -1,0 +1,14 @@
+{
+  "name": "@repo/bun-lambda",
+  "version": "0.0.0",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "bun build --minify --target=bun ./src/index.ts --outdir ./dist"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14"
+  },
+  "dependencies": {
+    "@repo/common-handler": "workspace:*"
+  }
+}

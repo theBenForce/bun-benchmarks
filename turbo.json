@@ -2,10 +2,21 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
+    "benchmark": {
+      "dependsOn": ["^benchmark"],
+      "inputs": ["$TURBO_DEFAULT$", "src/index.js"],
+      "outputs": ["results.csv"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**"]
+    },
+    "deploy": {
+      "dependsOn": ["^deploy", "^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "cache": false,
+      "interactive": true
     },
     "lint": {
       "dependsOn": ["^lint"]

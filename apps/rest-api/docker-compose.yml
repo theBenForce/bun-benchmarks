@@ -1,0 +1,86 @@
+
+
+services:
+  api_node:
+    container_name: api_node
+    image: node:22-alpine
+    entrypoint: node
+    command: /app/index.node.js
+    extends:
+      file: services.yml
+      service: api
+  
+  api_bun:
+    container_name: api_bun
+    image: oven/bun:1.1-alpine
+    entrypoint: bun
+    command: /app/index.bun.ts
+    extends:
+      file: services.yml
+      service: api
+  
+  test_node_load:
+    extends:
+      file: services.yml
+      service: test_runner
+    command: run -e MY_HOSTNAME=api_node --summary-export=/results/load.json --out csv=/results/load.csv /tests/load-test.js
+    volumes:
+      - ./tests:/tests
+      - ./results/node:/results
+    
+    user: 1000:1000
+    environment:
+      PUID: 1000
+      PGID: 1000
+    depends_on:
+      api_node:
+        condition: service_healthy
+  
+  test_bun_load:
+    extends:
+      file: services.yml
+      service: test_runner
+    command: run -e MY_HOSTNAME=api_bun --summary-export=/results/load.json --out csv=/results/load.csv /tests/load-test.js
+    volumes:
+      - ./tests:/tests
+      - ./results/bun:/results
+    user: 1000:1000
+    environment:
+      PUID: 1000
+      PGID: 1000
+    depends_on:
+      api_bun:
+        condition: service_healthy
+  
+  test_node_stress:
+    extends:
+      file: services.yml
+      service: test_runner
+    command: run -e MY_HOSTNAME=api_node --summary-export=/results/stress.json --out csv=/results/stress.csv /tests/stress-test.js
+    volumes:
+      - ./tests:/tests
+      - ./results/node:/results
+    
+    user: 1000:1000
+    environment:
+      PUID: 1000
+      PGID: 1000
+    depends_on:
+      api_node:
+        condition: service_healthy
+  
+  test_bun_stress:
+    extends:
+      file: services.yml
+      service: test_runner
+    command: run -e MY_HOSTNAME=api_bun --summary-export=/results/stress.json --out csv=/results/stress.csv /tests/stress-test.js
+    volumes:
+      - ./tests:/tests
+      - ./results/bun:/results
+    user: 1000:1000
+    environment:
+      PUID: 1000
+      PGID: 1000
+    depends_on:
+      api_bun:
+        condition: service_healthy

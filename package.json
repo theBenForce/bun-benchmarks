@@ -3,11 +3,14 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "benchmark": "turbo run benchmark --concurrency=1",
+    "deploy": "turbo deploy",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/bun": "^1.1.14",
     "prettier": "^3.2.5",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"

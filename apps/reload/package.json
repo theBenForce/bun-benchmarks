@@ -1,0 +1,10 @@
+{
+  "name": "@repo/reload",
+  "description": "Demonstrate hot reloading with bun",
+  "scripts": {
+    "run:node": "nodemon ./src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@repo/hello",
+  "description": "A simple benchmark app",
+  "scripts": {
+    "benchmark": "../../benchmark.sh \"bun ./src/index.js\" \"node ./src/index.js\""
+  }
+}
